@@ -1,6 +1,8 @@
+'use client'
 import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 export default function Header() {
   return (
@@ -35,16 +37,24 @@ export default function Header() {
               About
             </li>
           </Link>
-          <Link href="/sign-up">
-            <Button className="text-lg font-medium bg-gradient-to-b from-blue-400 to-blue-700 text-white rounded-md transition-all duration-300 hover:opacity-80">
-              SignUp
-            </Button>
-          </Link>
-          <Link href="/log-in">
-            <Button className="text-lg font-medium text-black bg-white border rounded-md transition-all duration-300 hover:bg-slate-200 opacity-80">
-              LogIn
-            </Button>
-          </Link>
+
+
+          <SignedOut>
+            <Link href="/sign-up">
+              <Button className="text-lg font-medium bg-gradient-to-b from-blue-400 to-blue-700 text-white rounded-md transition-all duration-300 hover:opacity-80">
+                SignUp
+              </Button>
+            </Link>
+            <Link href="/sign-in">
+              <Button className="text-lg font-medium text-black bg-white border rounded-md transition-all duration-300 hover:bg-slate-200 opacity-80">
+                LogIn
+              </Button>
+            </Link>
+          </SignedOut>
+
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </ul>
       </div>
     </header>
