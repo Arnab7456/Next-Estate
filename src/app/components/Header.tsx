@@ -1,5 +1,4 @@
 "use client";
-
 import { FaSearch } from "react-icons/fa";
 import { Sun, Moon} from "lucide-react";
 import Link from "next/link";
@@ -19,7 +18,7 @@ export default function Header() {
   if (!mounted) return null;
 
   return (
-    <header className="bg-slate-200 shadow-md">
+    <header className=" w-full backdrop-blur-lg bg-transparent shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto py-3">
         <Link href="/">
           <h1 className="font-bold text-lg sm:text-2xl gap-1 flex items-center">
