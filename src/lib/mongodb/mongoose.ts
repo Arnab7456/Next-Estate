@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
+
 export const connect = async (): Promise<void> => {
-  
   mongoose.set('strictQuery', true);
   
   // Check if MongoDB is already connected
