@@ -1,35 +1,54 @@
-import { Webhook } from 'svix'
-import { headers } from 'next/headers'
-import { WebhookEvent } from '@clerk/nextjs/server'
+'use server'
+import { Webhook } from 'svix';
+import { headers } from 'next/headers';
+import { createOrUpdateUser, deleteUser } from '@/lib/actions/user';
+import { clerkClient } from '@clerk/nextjs/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
-  const SIGNING_SECRET = process.env.SIGNING_SECRET
+// Removed unused SvixHeaders interface
+interface ClerkUserEventData {
+  id: string;
+  first_name: string;
+  last_name: string;
+  image_url: string;
+  email_addresses: { email_address: string }[];
+}
+
+interface ClerkWebhookEvent {
+  type: string;
+  data: ClerkUserEventData;
+}
+
+export async function POST(req: NextRequest): Promise<NextResponse> {
+  const SIGNING_SECRET = process.env.SIGNING_SECRET;
 
   if (!SIGNING_SECRET) {
-    throw new Error('Error: Please add SIGNING_SECRET from Clerk Dashboard to .env or .env.local')
+    throw new Error(
+      'Error: Please add SIGNING_SECRET from Clerk Dashboard to .env or .env.local'
+    );
   }
 
   // Create new Svix instance with secret
-  const wh = new Webhook(SIGNING_SECRET)
+  const wh = new Webhook(SIGNING_SECRET);
 
   // Get headers
-  const headerPayload = await headers()
-  const svix_id = headerPayload.get('svix-id')
-  const svix_timestamp = headerPayload.get('svix-timestamp')
-  const svix_signature = headerPayload.get('svix-signature')
+  const headerPayload = await headers(); // Await `headers` since it returns a promise
+  const svix_id = (await headerPayload).get('svix-id');
+  const svix_timestamp = (await headerPayload).get('svix-timestamp');
+  const svix_signature = (await headerPayload).get('svix-signature');
 
   // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response('Error: Missing Svix headers', {
+    return new NextResponse('Error: Missing Svix headers', {
       status: 400,
-    })
+    });
   }
 
   // Get body
-  const payload = await req.json()
-  const body = JSON.stringify(payload)
+  const payload = await req.json();
+  const body = JSON.stringify(payload);
 
-  let evt: WebhookEvent
+  let evt: ClerkWebhookEvent;
 
   // Verify payload with headers
   try {
@@ -37,27 +56,59 @@ export async function POST(req: Request) {
       'svix-id': svix_id,
       'svix-timestamp': svix_timestamp,
       'svix-signature': svix_signature,
-    }) as WebhookEvent
+    }) as ClerkWebhookEvent; // Ensure the verified payload matches the expected structure
   } catch (err) {
-    console.error('Error: Could not verify webhook:', err)
-    return new Response('Error: Verification error', {
+    console.error('Error: Could not verify webhook:', err);
+    return new NextResponse('Error: Verification error', {
       status: 400,
-    })
+    });
   }
 
-  // Do something with payload
-  // For this guide, log payload to console
-  const { id } = evt.data
-  const eventType = evt.type
-  if(evt.type === 'user.created'){
-    console.log(`User created with id ${id} of type ${eventType}`)
-  }
-  if(evt.type === 'user.updated'){
-    console.log(`User updated with id ${id} of type ${eventType}`)
-  }
-  if(evt.type === 'user.deleted'){
-    console.log(`User deleted with id ${id} of type ${eventType}`)
+  // Process the event
+  const { id } = evt.data;
+  const eventType = evt.type;
+
+  if (eventType === 'user.created' || eventType === 'user.updated') {
+    const { first_name, last_name, image_url, email_addresses } = evt.data;
+    try {
+      const user = await createOrUpdateUser({
+        id,
+        first_name,
+        last_name,
+        image_url,
+        email_address: email_addresses[0]?.email_address || '',
+      });
+
+      if (user && eventType === 'user.created') {
+        try {
+            // @ts-ignore
+          await clerkClient.users.updateUserMetadata(id, {
+            publicMetadata: {
+              userMongoId: user._id,
+            },
+          });
+        } catch (error) {
+          console.error('Error: Could not update user metadata:', error);
+        }
+      }
+    } catch (error) {
+      console.error('Error: Could not create or update user:', error);
+      return new NextResponse('Error: Could not create or update user', {
+        status: 400,
+      });
+    }
   }
 
-  return new Response('Webhook received', { status: 200 })
+  if (eventType === 'user.deleted') {
+    try {
+      await deleteUser(id);
+    } catch (error) {
+      console.error('Error: Could not delete user:', error);
+      return new NextResponse('Error: Could not delete user', {
+        status: 400,
+      });
+    }
+  }
+
+  return new NextResponse('Webhook received', { status: 200 });
 }
