@@ -1,11 +1,9 @@
-'use server'
 import { Webhook } from 'svix';
 import { headers } from 'next/headers';
 import { createOrUpdateUser, deleteUser } from '@/lib/actions/user';
 import { clerkClient } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-// Removed unused SvixHeaders interface
 interface ClerkUserEventData {
   id: string;
   first_name: string;
@@ -81,7 +79,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
       if (user && eventType === 'user.created') {
         try {
-          await clerkClient.users.updateUserMetadata(id, {
+          // Await clerkClient to get the correct instance
+          const clerk = await clerkClient(); // Ensure this resolves to ClerkClient
+
+          // Now you can call `users.updateUserMetadata` correctly
+          await clerk.users.updateUserMetadata(id, {
             publicMetadata: {
               userMongoId: user._id,
             },
