@@ -72,7 +72,7 @@ export default function Header() {
               </button>
             </div>
           </li>
-
+              
           <SignedOut>
             <Link href="/sign-up">
               <Button className="text-lg font-medium bg-gradient-to-b from-blue-400 to-blue-700 text-white rounded-md transition-all duration-300 hover:opacity-80">
@@ -87,6 +87,9 @@ export default function Header() {
           </SignedOut>
 
           <SignedIn>
+            <Link href="/create-listing">
+                <Button> Dashboard</Button>
+            </Link>
             <UserButton />
           </SignedIn>
         </ul>
