@@ -1,10 +1,23 @@
-'use client'
+"use client";
+
 import { FaSearch } from "react-icons/fa";
+import { Sun, Moon} from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function Header() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <header className="bg-slate-200 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto py-3">
@@ -26,7 +39,7 @@ export default function Header() {
           </button>
         </form>
 
-        <ul className="flex items-center justify-self-auto gap-2">
+        <ul className="flex items-center gap-4">
           <Link href="/">
             <li className="hidden md:inline text-slate-700 hover:text-blue-700 rounded-lg px-3 py-2">
               Home
@@ -38,6 +51,28 @@ export default function Header() {
             </li>
           </Link>
 
+          <li>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setTheme("light")}
+                className={`p-2 rounded-lg ${
+                  theme === "light" ? "bg-blue-200" : "hover:bg-slate-300"
+                }`}
+                aria-label="Light Mode"
+              >
+                <Sun className="text-yellow-500 w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setTheme("dark")}
+                className={`p-2 rounded-lg ${
+                  theme === "dark" ? "bg-blue-200" : "hover:bg-slate-300"
+                }`}
+                aria-label="Dark Mode"
+              >
+                <Moon className="text-gray-800 w-5 h-5" />
+              </button>
+            </div>
+          </li>
 
           <SignedOut>
             <Link href="/sign-up">

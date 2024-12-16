@@ -1,7 +1,7 @@
-
+'use client'
 export default function Home() {
   return (
-    <div className=" text-center text-black">
+    <div className=" text-center ">
       hello
     </div>
   );
