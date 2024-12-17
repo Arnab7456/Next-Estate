@@ -10,7 +10,7 @@ const firebaseConfig = {
   apiKey: process.env.apiKey,
   authDomain: process.env.authDomain,
   projectId: process.env.projectId,
-  storageBucket: process.env.NEXT_PUBLIC_storageBucket,
+  storageBucket: "nextapp-954bc.firebasestorage.app",
   messagingSenderId: process.env.messagingSenderId,
   appId: process.env.appId,
   measurementId: process.env.measurementId
