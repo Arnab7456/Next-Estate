@@ -8,6 +8,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
+import { Button } from '@/components/ui/button';
 
 interface FormData {
   imageUrls: string[];
@@ -239,9 +240,9 @@ export default function CreateListing() {
                 </button>
               </div>
             ))}
-          <button className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
+          <Button className='p-3 bg-blue-500  dark:text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
             Create Listing
-          </button>
+          </Button>
         </div>
       </form>
     </main>
