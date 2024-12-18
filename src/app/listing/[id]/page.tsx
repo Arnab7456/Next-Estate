@@ -10,6 +10,7 @@ interface Listing {
   imageUrls: string[];
   offer: boolean;
   discountPrice: number;
+  
   regularPrice: number;
   type: 'rent' | 'sale';
   address: string;
