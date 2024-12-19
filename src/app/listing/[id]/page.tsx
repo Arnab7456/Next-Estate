@@ -1,6 +1,7 @@
 'use client';
 import { Bath, Bed, RockingChair, MapPinned, Car } from 'lucide-react';
 import React from 'react';
+import { useParams } from 'next/navigation';
 
 interface Listing {
   name: string;
@@ -17,18 +18,15 @@ interface Listing {
   furnished: boolean;
 }
 
-type ListingPageProps = {
-  params: { id: string };
-};
-
-export default function ListingPage({ params }: ListingPageProps) {
+export default function ListingPage() {
+  const params = useParams();
   const [listing, setListing] = React.useState<Listing | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     const fetchListing = async () => {
       try {
-        const result = await fetch(`${process.env.URL || 'http://localhost:3000'}/api/listing/get`, {
+        const result = await fetch(`/api/listing/get`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -46,7 +44,9 @@ export default function ListingPage({ params }: ListingPageProps) {
       }
     };
 
-    fetchListing();
+    if (params.id) {
+      fetchListing();
+    }
   }, [params.id]);
 
   if (loading) {
