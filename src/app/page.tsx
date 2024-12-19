@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+// import { ReactNode } from 'react';
 import ListingItem from '../app/components/srcListingItem';
 import Link from 'next/link';
 
@@ -14,7 +14,7 @@ type Listing = {
   type: 'rent' | 'sale';
   bedrooms: number;
   bathrooms: number;
-  [key: string]: ReactNode; // To cover any other properties that a listing might have
+  // [key: string]: ReactNode; // To cover any other properties that a listing might have
 };
 
 export default async function Home() {
@@ -90,12 +90,12 @@ export default async function Home() {
           <br />
           We have a wide range of properties for you to choose from.
         </div>
-        <Link
-          href={'/search'}
+        <div
+          // href={'/search'}
           className='text-xs sm:text-sm text-blue-800 font-bold hover:underline'
         >
           Let&apos;s get started...
-        </Link>
+        </div>
       </div>
       <img
         src='https://firebasestorage.googleapis.com/v0/b/mern-auth-1c4ae.appspot.com/o/1693307829089home%203.jpeg?alt=media&token=8dcc9a22-a8d3-4737-b27f-7c77b417a7d0'
