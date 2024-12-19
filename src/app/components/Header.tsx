@@ -94,7 +94,7 @@ export default function Header() {
           </SignedOut>
 
           <SignedIn>
-            <Link href="/api/create-listing">
+            <Link href="create/listing">
               <Button> Dashboard</Button>
             </Link>
             <UserButton />
@@ -146,7 +146,7 @@ export default function Header() {
 
               <SignedIn>
                 <div className="flex flex-col gap-2">
-                  <Link href="/api/create-listing">
+                  <Link href="/create-listing">
                     <Button className="w-full">Dashboard</Button>
                   </Link>
                   <div className="flex justify-center py-2">
