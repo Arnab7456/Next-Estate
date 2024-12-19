@@ -24,7 +24,7 @@ export default async function Home() {
 
   // Fetch rent listings
   try {
-    const result = await fetch(process.env.URL + '/api/listing/get', {
+    const result = await fetch(process.env.URL || "http://localhost:3000" + '/api/listing/get', {
       method: 'POST',
       body: JSON.stringify({
         type: 'rent',
@@ -42,7 +42,7 @@ export default async function Home() {
 
   // Fetch sale listings
   try {
-    const result = await fetch(process.env.URL + '/api/listing/get', {
+    const result = await fetch(process.env.URL ||  "http://localhost:3000" + '/api/listing/get', {
       method: 'POST',
       body: JSON.stringify({
         type: 'sale',
@@ -60,7 +60,7 @@ export default async function Home() {
 
   // Fetch offer listings
   try {
-    const result = await fetch(process.env.URL + '/api/listing/get', {
+    const result = await fetch(process.env.URL ||  "http://localhost:3000" + '/listing/get', {
       method: 'POST',
       body: JSON.stringify({
         limit: 4,
