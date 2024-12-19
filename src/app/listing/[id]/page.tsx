@@ -18,7 +18,7 @@ interface Listing {
 }
 
 type ListingPageProps = {
-  params: { id: string }; // `params` should be typed as an object with `id` as a string
+  params: { id: string };
 };
 
 export default function ListingPage({ params }: ListingPageProps) {
@@ -33,7 +33,7 @@ export default function ListingPage({ params }: ListingPageProps) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ listingId: params.id }), // params.id correctly typed as string
+          body: JSON.stringify({ listingId: params.id }),
           cache: 'no-store',
         });
 
