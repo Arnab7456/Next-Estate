@@ -1,16 +1,31 @@
 import { Bath, Bed, RockingChair, MapPinned, Car } from 'lucide-react';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-interface ListingPageProps {
-  params: {
-    id: string;
-  };
+interface ListingParams {
+  id: string;
 }
 
-export default async function ListingPage({
-  params,
-}: ListingPageProps) {
-  let listing = null;
+interface Listing {
+  name: string;
+  imageUrls: string[];
+  offer: boolean;
+  discountPrice: number;
+  regularPrice: number;
+  type: 'rent' | 'sale';
+  address: string;
+  description: string;
+  bedrooms: number;
+  bathrooms: number;
+  parking: boolean;
+  furnished: boolean;
+}
+
+interface ListingProps {
+  params: ListingParams;
+}
+
+export default async function ListingPage({ params }: ListingProps): Promise<ReactNode> {
+  let listing: Listing | null = null;
 
   try {
     const result = await fetch(`${process.env.URL || 'http://localhost:3000'}/api/listing/get`, {
@@ -22,7 +37,7 @@ export default async function ListingPage({
       cache: 'no-store',
     });
 
-    const data = await result.json();
+    const data: Listing[] = await result.json();
     listing = data[0] || null;
   } catch (error) {
     console.error('Error fetching listing:', error);

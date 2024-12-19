@@ -172,8 +172,8 @@ export default function CreateListing() {
 
       setLoading(false);
       router.push(`/listing/${data._id}`);
-    } catch (error: any) {
-      setError(error.message || "Something went wrong");
+    } catch (error) {
+      setError( error + "Something went wrong" );
       setLoading(false);
     }
   };
