@@ -1,4 +1,5 @@
 // import { ReactNode } from 'react';
+
 import ListingItem from '../app/components/srcListingItem';
 import Link from 'next/link';
 
@@ -24,7 +25,7 @@ export default async function Home() {
 
   // Fetch rent listings
   try {
-    const result = await fetch(process.env.URL || "http://localhost:3000" + '/api/listing/get', {
+    const result = await fetch("https://next-estate-neon.vercel.app/" + '/api/listing/get', {
       method: 'POST',
       body: JSON.stringify({
         type: 'rent',
