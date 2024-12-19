@@ -1,3 +1,4 @@
+'use client';
 import { Bath, Bed, RockingChair, MapPinned, Car } from 'lucide-react';
 import React from 'react';
 
@@ -25,23 +26,42 @@ type PageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
 };
 
-export default async function ListingPage({ params }: PageProps) {
-  let listing: Listing | null = null;
+export default function ListingPage({ params }: PageProps) {
+  const [listing, setListing] = React.useState<Listing | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(true); // Loading state for better UX
 
-  try {
-    const result = await fetch(`${process.env.URL || 'http://localhost:3000'}/api/listing/get`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ listingId: params.id }),
-      cache: 'no-store',
-    });
+  React.useEffect(() => {
+    const fetchListing = async () => {
+      try {
+        const result = await fetch(`${process.env.URL || 'http://localhost:3000'}/api/listing/get`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ listingId: params.id }),
+          cache: 'no-store', // No caching for fresh data
+        });
 
-    const data: Listing[] = await result.json();
-    listing = data[0] || null;
-  } catch (error) {
-    console.error('Error fetching listing:', error);
+        const data: Listing[] = await result.json();
+        setListing(data[0] || null);
+      } catch (error) {
+        console.error('Error fetching listing:', error);
+      } finally {
+        setLoading(false); // Set loading to false after data fetching is complete
+      }
+    };
+
+    fetchListing();
+  }, [params.id]);
+
+  if (loading) {
+    return (
+      <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
+        <h2 className="text-xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-2xl">
+          Loading...
+        </h2>
+      </main>
+    );
   }
 
   if (!listing) {
