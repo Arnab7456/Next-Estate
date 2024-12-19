@@ -63,7 +63,7 @@ export default function CreateListing() {
 
   console.log(formData);
 
-  const handleImageSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleImageSubmit = () => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
       setImageUploadError(false);
@@ -122,6 +122,7 @@ export default function CreateListing() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    // @ts-ignore
     const { id, value, type, checked } = e.target;
 
     if (id === "sale" || id === "rent") {

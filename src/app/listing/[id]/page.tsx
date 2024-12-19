@@ -10,7 +10,6 @@ interface Listing {
   imageUrls: string[];
   offer: boolean;
   discountPrice: number;
-  
   regularPrice: number;
   type: 'rent' | 'sale';
   address: string;
@@ -25,7 +24,7 @@ interface ListingProps {
   params: ListingParams;
 }
 
-export default async function Listing({ params }: ListingProps): Promise<ReactNode> {
+export default async function ListingPage({ params }: ListingProps): Promise<ReactNode> {
   let listing: Listing | null = null;
 
   try {
