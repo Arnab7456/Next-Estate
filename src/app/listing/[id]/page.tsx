@@ -2,10 +2,6 @@
 import { Bath, Bed, RockingChair, MapPinned, Car } from 'lucide-react';
 import React from 'react';
 
-interface ListingParams {
-  id: string;
-}
-
 interface Listing {
   name: string;
   imageUrls: string[];
@@ -21,14 +17,13 @@ interface Listing {
   furnished: boolean;
 }
 
-type PageProps = {
-  params: ListingParams;
-  searchParams?: { [key: string]: string | string[] | undefined };
+type ListingPageProps = {
+  params: { id: string }; // `params` should be typed as an object with `id` as a string
 };
 
-export default function ListingPage({ params }: PageProps) {
+export default function ListingPage({ params }: ListingPageProps) {
   const [listing, setListing] = React.useState<Listing | null>(null);
-  const [loading, setLoading] = React.useState<boolean>(true); // Loading state for better UX
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     const fetchListing = async () => {
@@ -38,8 +33,8 @@ export default function ListingPage({ params }: PageProps) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ listingId: params.id }),
-          cache: 'no-store', // No caching for fresh data
+          body: JSON.stringify({ listingId: params.id }), // params.id correctly typed as string
+          cache: 'no-store',
         });
 
         const data: Listing[] = await result.json();
@@ -47,7 +42,7 @@ export default function ListingPage({ params }: PageProps) {
       } catch (error) {
         console.error('Error fetching listing:', error);
       } finally {
-        setLoading(false); // Set loading to false after data fetching is complete
+        setLoading(false);
       }
     };
 
