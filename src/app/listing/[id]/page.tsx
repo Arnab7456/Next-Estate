@@ -1,11 +1,15 @@
 import { Bath, Bed, RockingChair, MapPinned, Car } from 'lucide-react';
-import React, { ReactNode } from 'react';
+import React from 'react';
+
+interface ListingPageProps {
+  params: {
+    id: string;
+  };
+}
 
 export default async function ListingPage({
   params,
-}: {
-  params: { id: string };
-}): Promise<ReactNode> {
+}: ListingPageProps) {
   let listing = null;
 
   try {
