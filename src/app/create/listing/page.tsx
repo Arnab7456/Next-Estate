@@ -122,26 +122,34 @@ export default function CreateListing() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { id, value, type, checked } = e.target;
+    if (e.target instanceof HTMLInputElement) {
+      const { id, value, type, checked } = e.target;
 
-    if (id === "sale" || id === "rent") {
-      setFormData((prev) => ({
-        ...prev,
-        type: id as "rent" | "sale",
-      }));
-    } else if (["parking", "furnished", "offer"].includes(id)) {
-      setFormData((prev) => ({
-        ...prev,
-        [id]: checked,
-      }));
+      if (id === "sale" || id === "rent") {
+        setFormData((prev) => ({
+          ...prev,
+          type: id as "rent" | "sale",
+        }));
+      } else if (["parking", "furnished", "offer"].includes(id)) {
+        setFormData((prev) => ({
+          ...prev,
+          [id]: checked,
+        }));
+      } else {
+        setFormData((prev) => ({
+          ...prev,
+          [id]: type === "number" ? Number(value) : value,
+        }));
+      }
     } else {
+      // Handle textarea
+      const { id, value } = e.target;
       setFormData((prev) => ({
         ...prev,
-        [id]: type === "number" ? Number(value) : value,
+        [id]: value,
       }));
     }
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
