@@ -43,7 +43,7 @@ export default async function Home() {
 
   // Fetch sale listings
   try {
-    const result = await fetch(process.env.URL ||  "http://localhost:3000" + '/api/listing/get', {
+    const result = await fetch("https://next-estate-neon.vercel.app/" + '/api/listing/get', {
       method: 'POST',
       body: JSON.stringify({
         type: 'sale',
@@ -61,7 +61,7 @@ export default async function Home() {
 
   // Fetch offer listings
   try {
-    const result = await fetch(process.env.URL ||  "http://localhost:3000" + '/listing/get', {
+    const result = await fetch("https://next-estate-neon.vercel.app/" + '/api/listing/get', {
       method: 'POST',
       body: JSON.stringify({
         limit: 4,
