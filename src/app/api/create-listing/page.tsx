@@ -122,7 +122,6 @@ export default function CreateListing() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    // @ts-ignore
     const { id, value, type, checked } = e.target;
 
     if (id === "sale" || id === "rent") {
