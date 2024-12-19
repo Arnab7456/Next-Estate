@@ -1,5 +1,5 @@
 import { Bath, Bed, RockingChair, MapPinned, Car } from 'lucide-react';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 interface ListingParams {
   id: string;
@@ -20,11 +20,12 @@ interface Listing {
   furnished: boolean;
 }
 
-interface ListingProps {
+type PageProps = {
   params: ListingParams;
-}
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
-export default async function ListingPage({ params }: ListingProps): Promise<ReactNode> {
+export default async function ListingPage({ params }: PageProps) {
   let listing: Listing | null = null;
 
   try {
