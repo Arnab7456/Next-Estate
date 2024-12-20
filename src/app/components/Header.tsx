@@ -2,7 +2,7 @@
 import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import { Sun, Moon } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
