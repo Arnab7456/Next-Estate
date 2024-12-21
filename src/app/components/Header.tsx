@@ -34,7 +34,7 @@ export default function Header() {
   const handleSignUpToast = () => toast.success("Create an account to get started.");
 
   return (
-    <header className="w-full  bg-transparent shadow-md ">
+    <header className="w-full  bg-transparent shadow-md relative">
       <Toaster position="bottom-left" reverseOrder={true} />
       <div className="flex justify-between items-center max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
         <Link href="/">
