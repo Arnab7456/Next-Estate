@@ -3,14 +3,16 @@ import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import { Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/app/components/ui/button";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const { isSignedIn } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -20,10 +22,20 @@ export default function Header() {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (isSignedIn) {
+      toast.success("Welcome back!");
+    }
+  }, [isSignedIn]);
+
   if (!mounted) return null;
 
+  const handleSignInToast = () => toast.success("Welcome! Please sign in.");
+  const handleSignUpToast = () => toast.success("Create an account to get started.");
+
   return (
-    <header className="w-full backdrop-blur-lg bg-transparent shadow-md relative dark:">
+    <header className="w-full  bg-transparent shadow-md ">
+      <Toaster position="bottom-left" reverseOrder={true} />
       <div className="flex justify-between items-center max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
         <Link href="/">
           <h1 className="font-bold text-lg sm:text-2xl gap-1 flex items-center">
@@ -81,12 +93,12 @@ export default function Header() {
           </li>
 
           <SignedOut>
-            <Link href="/sign-up">
+            <Link href="/sign-up" onClick={handleSignUpToast}>
               <Button className="text-lg font-medium bg-gradient-to-b from-blue-400 to-blue-700 text-white rounded-md transition-all duration-300 hover:opacity-80">
                 SignUp
               </Button>
             </Link>
-            <Link href="/sign-in">
+            <Link href="/sign-in" onClick={handleSignInToast}>
               <Button className="text-lg font-medium text-black bg-white border rounded-md transition-all duration-300 hover:bg-slate-200 opacity-80">
                 LogIn
               </Button>
@@ -94,8 +106,8 @@ export default function Header() {
           </SignedOut>
 
           <SignedIn>
-            <Link href="create/listing">
-              <Button> Dashboard</Button>
+            <Link href="/create/listing">
+              <Button>Dashboard</Button>
             </Link>
             <UserButton />
           </SignedIn>
@@ -106,13 +118,13 @@ export default function Header() {
             <div className="px-4 pt-2 pb-4 space-y-2">
               <Link
                 href="/"
-                className="block py-2  hover:text-blue-600 dark:hover:text-blue-600"
+                className="block py-2 hover:text-blue-600 dark:hover:text-blue-600"
               >
                 Home
               </Link>
               <Link
                 href="/about"
-                className="block py-2  hover:text-blue-600 dark:hover:text-blue-600"
+                className="block py-2 hover:text-blue-600 dark:hover:text-blue-600"
               >
                 About
               </Link>
@@ -131,12 +143,12 @@ export default function Header() {
 
               <SignedOut>
                 <div className="flex flex-col gap-2">
-                  <Link href="/sign-up">
+                  <Link href="/sign-up" onClick={handleSignUpToast}>
                     <Button className="w-full text-lg font-medium bg-gradient-to-b from-blue-400 to-blue-700 text-white rounded-md transition-all duration-300 hover:opacity-80">
                       SignUp
                     </Button>
                   </Link>
-                  <Link href="/sign-in">
+                  <Link href="/sign-in" onClick={handleSignInToast}>
                     <Button className="w-full text-lg font-medium text-black bg-white border rounded-md transition-all duration-300 hover:bg-slate-200 opacity-80">
                       LogIn
                     </Button>
