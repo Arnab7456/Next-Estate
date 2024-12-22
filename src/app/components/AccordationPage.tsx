@@ -8,7 +8,7 @@ import {
 
 export default function FAQPage() {
   return (
-    <div className=" text-center">
+    <div className=" text-center mt-4 md:mt-10">
       <h1 className=" text-4xl font-sans font-bold pb-2">Frequently Asked Questions </h1>
       <p className=" font-serif pb-4"> Quick answers to any questions you may have.</p>
 
