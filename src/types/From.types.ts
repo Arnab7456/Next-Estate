@@ -20,3 +20,5 @@ export interface FormData {
     min: number;
     max: number;
   }
+
+  

@@ -1,13 +1,8 @@
+import { ClerkProps } from "@/types/type";
 import User from "../Model/UserModel";
 import { connect } from "../mongodb/mongoose";
 
-export interface ClerkProps {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email_address: string;
-  image_url: string;
-}
+
 
 export const createOrUpdateUser = async ({
   id,
@@ -15,7 +10,7 @@ export const createOrUpdateUser = async ({
   last_name,
   image_url,
   email_address,
-}: ClerkProps) => {
+}: ClerkProps ) => {
   try {
     
     await connect();

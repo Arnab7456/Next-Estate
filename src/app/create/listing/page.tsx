@@ -13,28 +13,9 @@ import {
 
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { FormData } from "@/types/From.types";
+import { InputField } from "@/types/type";
 
-interface FormData {
-  imageUrls: string[];
-  name: string;
-  description: string;
-  address: string;
-  type: "rent" | "sale";
-  bedrooms: number;
-  bathrooms: number;
-  regularPrice: number;
-  discountPrice: number;
-  offer: boolean;
-  parking: boolean;
-  furnished: boolean;
-}
-
-interface InputField {
-  id: keyof FormData; // Ensure id matches keys of formData
-  label: string;
-  min: number;
-  max: number;
-}
 
 export default function CreateListing() {
   const { isSignedIn, user, isLoaded } = useUser();
