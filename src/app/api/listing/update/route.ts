@@ -1,22 +1,8 @@
 import { connect } from '../../../../lib/mongodb/mongoose';
 import { currentUser } from '@clerk/nextjs/server';
 import Listing from "../../../../lib/Model/ListingModel";
-interface RequestData {
-  userMongoId: string;
-  listingId: string;
-  name: string;
-  description: string;
-  address: string;
-  regularPrice: number;
-  discountPrice: number;
-  bathrooms: number;
-  bedrooms: number;
-  furnished: boolean;
-  parking: boolean;
-  type: 'rent' | 'sale';
-  offer: boolean;
-  imageUrls: string[];
-}
+import { UpdateRequestData } from '@/types/listing.types';
+
 
 export const POST = async (req: Request): Promise<Response> => {
   const user = await currentUser();
@@ -24,7 +10,7 @@ export const POST = async (req: Request): Promise<Response> => {
   try {
     await connect();
 
-    const data: RequestData = await req.json();
+    const data: UpdateRequestData = await req.json();
 
     if (!user || user.publicMetadata.userMogoId !== data.userMongoId) {
       return new Response('Unauthorized', {

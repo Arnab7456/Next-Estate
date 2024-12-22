@@ -1,18 +1,7 @@
+import { RequestData } from "@/types/listing.types";
 import Listing from "../../../../lib/Model/ListingModel";
 import { connect } from '../../../../lib/mongodb/mongoose';
 
-interface RequestData {
-  startIndex?: string;
-  limit?: string;
-  order?: 'asc' | 'desc';
-  offer?: boolean | string;
-  furnished?: boolean | string;
-  parking?: boolean | string;
-  type?: 'sale' | 'rent' | 'all';
-  userId?: string;
-  listingId?: string;
-  searchTerm?: string;
-}
 
 export const POST = async (req: Request): Promise<Response> => {
   await connect();
