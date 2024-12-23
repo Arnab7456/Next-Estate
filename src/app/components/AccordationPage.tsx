@@ -10,7 +10,7 @@ export default function FAQPage() {
   return (
     <div className=" text-center mt-4 md:mt-10">
       <h1 className=" text-4xl font-sans font-bold pb-2">Frequently Asked Questions </h1>
-      <p className=" font-serif pb-4"> Quick answers to any questions you may have.</p>
+      <p className=" font-serif pb-4 pt-2"> Quick answers to any questions you may have.</p>
 
       <div className="w-full h-fit py-0 flex justify-center items-center">
         <div className="md:w-3/6 w-full flex flex-col items-center rounded-lg ">
