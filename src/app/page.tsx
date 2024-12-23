@@ -4,7 +4,7 @@ import { ListingProos } from "@/types/type";
 import HomeClient from "./components/HomePage";
 import { useEffect, useState } from "react";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.URL;
 
 async function fetchListings(params: { type?: string; offer?: boolean; limit?: number; order?: string }): Promise<ListingProos[] | null> {
   try {
