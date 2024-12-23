@@ -58,7 +58,7 @@ const ListingSection = ({
       </Link>
     </motion.div>
 
-    <motion.div className="flex flex-wrap gap-4" {...animations.stagger}>
+    <motion.div className="flex flex-wrap gap-6" {...animations.stagger}>
       {listings.map((listing: ListingProos) => (
         <motion.div key={listing._id} {...animations.listingItem}>
           <ListingItem listing={listing} />
@@ -74,7 +74,7 @@ export default function HomeClient({
   offerListings,
 }: HomeClientProps) {
   return (
-    <div>
+    <div className="overflow-hidden">
       <motion.div
         className="flex flex-col gap-8 p-16 px-3 max-w-6xl mx-auto"
         {...animations.container}
@@ -104,6 +104,9 @@ export default function HomeClient({
           >
             Let&apos;s get started...
           </Link>
+          {/* <form className=" text-center ">
+          <input type="text" placeholder="Search.." className=" px-44 py-4 rounded-lg border" />
+          </form> */}
         </motion.div>
 
         <PromotionPage />
@@ -136,9 +139,10 @@ export default function HomeClient({
             linkHref="/search?type=sale"
           />
         )}
-
+      
         <AccordionPage />
       </div>
     </div>
   );
 }
+

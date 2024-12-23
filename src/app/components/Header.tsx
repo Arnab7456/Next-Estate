@@ -36,9 +36,9 @@ export default function Header() {
   return (
     <header className="w-full  bg-transparent shadow-md relative">
       <Toaster position="bottom-left" reverseOrder={true} />
-      <div className="flex justify-between items-center max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between items-center max-w-6xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
         <Link href="/">
-          <h1 className="font-bold text-lg sm:text-2xl gap-1 flex items-center">
+          <h1 className="font-bold text-lg sm:text-2xl gap-1 flex flex-wrap">
             <span className="text-blue-500">Nest</span>
             <span className="text-slate-700">Scout</span>
           </h1>
