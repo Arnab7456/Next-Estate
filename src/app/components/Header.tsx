@@ -10,7 +10,6 @@ import toast, { Toaster } from "react-hot-toast";
 import ListingPro from "./ListingPro";
 import { motion } from "framer-motion"; // Import motion
 
-// Adding motion variants for animations
 const menuVariants = {
   hidden: { opacity: 0, x: "100%" },
   visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
@@ -47,7 +46,7 @@ export default function Header() {
   const handleSignUpToast = () => toast.success("Create an account to get started.");
 
   return (
-    <header className="w-full bg-transparent shadow-md relative">
+    <header className="w-full bg-inherit shadow-md relative sticky top-0 z-50">
       <Toaster position="bottom-left" reverseOrder={true} />
       <div className="flex justify-between items-center max-w-6xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
         <Link href="/">
