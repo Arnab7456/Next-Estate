@@ -24,8 +24,10 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { FormData } from "@/types/From.types";
 import { InputField } from "@/types/type";
+import { CircleChevronDown  } from 'lucide-react';
 
-export default function RestPage() {
+
+export default function ListingPro() {
   const { isSignedIn, user, isLoaded } = useUser();
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState<boolean>(false);
@@ -220,7 +222,9 @@ export default function RestPage() {
           <DrawerDescription className=" text-center text-white dark:text-white">
             Fill out the form below to create a listing for your property.
           </DrawerDescription>
-          <DrawerClose onClick={() => setDrawerOpen(false)} />
+          <DrawerClose onClick={() => setDrawerOpen(false)} className=" flex justify-center items-center" >
+          <CircleChevronDown className=" text-blue-50" />
+             </DrawerClose>
         </DrawerHeader>
         <main className="p-3 max-w-4xl mx-auto">
           <form className="flex flex-col sm:flex-row gap-4" onSubmit={handleSubmit}>
@@ -228,7 +232,7 @@ export default function RestPage() {
               <input
                 type="text"
                 placeholder="Name"
-                className="border p-3 rounded-lg bg-inherit"
+                className="border p-3 rounded-lg bg-inherit text-white"
                 id="name"
                 maxLength={62}
                 minLength={10}
@@ -238,7 +242,7 @@ export default function RestPage() {
               />
               <textarea
                 placeholder="Description"
-                className="border p-3 rounded-lg bg-inherit"
+                className="border p-3 rounded-lg bg-inherit text-white"
                 id="description"
                 required
                 onChange={handleChange}
@@ -247,7 +251,7 @@ export default function RestPage() {
               <input
                 type="text"
                 placeholder="Address"
-                className="border p-3 rounded-lg bg-inherit"
+                className="border p-3 rounded-lg bg-inherit text-white"
                 id="address"
                 required
                 onChange={handleChange}
@@ -273,13 +277,13 @@ export default function RestPage() {
                   { id: "bathrooms", label: "Baths", min: 1, max: 10 },
                   {
                     id: "regularPrice",
-                    label: "Regular price (rupees /month)",
+                    label: "Regular price (₹/month)",
                     min: 50,
                     max: 10000000,
                   },
                   formData.offer && {
                     id: "discountPrice",
-                    label: "Discounted price (rupees /month)",
+                    label: "Discounted price (₹/month)",
                     min: 0,
                     max: 10000000,
                   },
