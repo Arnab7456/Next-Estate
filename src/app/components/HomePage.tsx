@@ -104,15 +104,13 @@ export default function HomeClient({
           >
             Let&apos;s get started...
           </Link>
-          {/* <form className=" text-center ">
-          <input type="text" placeholder="Search.." className=" px-44 py-4 rounded-lg border" />
-          </form> */}
+         
         </motion.div>
 
         <PromotionPage />
       </motion.div>
 
-      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
+      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10 ">
         {offerListings && offerListings.length > 0 && (
           <ListingSection
             title="Recent Offers"

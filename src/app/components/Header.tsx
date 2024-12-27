@@ -7,8 +7,19 @@ import { SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import RestPage from "./RestPage";
-// import TestPage from "../drawer/test";
+import ListingPro from "./ListingPro";
+import { motion } from "framer-motion"; // Import motion
+
+// Adding motion variants for animations
+const menuVariants = {
+  hidden: { opacity: 0, x: "100%" },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+};
+
+const buttonVariants = {
+  hover: { scale: 1.1, transition: { type: "spring", stiffness: 300 } },
+  tap: { scale: 0.95 },
+};
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -36,7 +47,7 @@ export default function Header() {
   const handleSignUpToast = () => toast.success("Create an account to get started.");
 
   return (
-    <header className="w-full  bg-transparent shadow-md relative">
+    <header className="w-full bg-transparent shadow-md relative">
       <Toaster position="bottom-left" reverseOrder={true} />
       <div className="flex justify-between items-center max-w-6xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
         <Link href="/">
@@ -57,16 +68,19 @@ export default function Header() {
         </form>
 
         <div className="md:hidden">
-          <button
+          <motion.button
             onClick={toggleMenu}
             className="text-slate-700 focus:outline-none"
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
           >
             {isMenuOpen ? (
               <FaTimes className="w-6 h-6" />
             ) : (
               <FaBars className="w-6 h-6" />
             )}
-          </button>
+          </motion.button>
         </div>
 
         <ul className="hidden md:flex items-center gap-4">
@@ -80,18 +94,19 @@ export default function Header() {
               About
             </li>
           </Link>
-          <li>
-            <div
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="inline-flex items-center justify-center h-10 w-10 rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              {theme === "dark" ? (
-                <Sun className="text-yellow-500 w-5 h-5" />
-              ) : (
-                <Moon className="text-gray-800 w-5 h-5" />
-              )}
-            </div>
-          </li>
+          <motion.li
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="inline-flex items-center justify-center h-10 w-10 rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+          >
+            {theme === "dark" ? (
+              <Sun className="text-yellow-500 w-5 h-5" />
+            ) : (
+              <Moon className="text-gray-800 w-5 h-5" />
+            )}
+          </motion.li>
 
           <SignedOut>
             <Link href="/sign-up" onClick={handleSignUpToast}>
@@ -107,30 +122,33 @@ export default function Header() {
           </SignedOut>
 
           <SignedIn>
-                <RestPage/>
+            <ListingPro />
             <UserButton />
           </SignedIn>
         </ul>
 
         {isMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-white dark:bg-black md:hidden shadow-lg z-50">
+          <motion.div
+            className="absolute top-full left-0 w-full bg-transparent bg-opacity-80 backdrop-blur-md md:hidden shadow-xl z-50"
+            variants={menuVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+          >
             <div className="px-4 pt-2 pb-4 space-y-2">
-              <Link
-                href="/"
-                className="block py-2 hover:text-blue-600 dark:hover:text-blue-600"
-              >
+              <Link href="/" className="block py-2 hover:text-blue-600 dark:hover:text-blue-600">
                 Home
               </Link>
-              <Link
-                href="/about"
-                className="block py-2 hover:text-blue-600 dark:hover:text-blue-600"
-              >
+              <Link href="/about" className="block py-2 hover:text-blue-600 dark:hover:text-blue-600">
                 About
               </Link>
 
-              <div
+              <motion.div
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 className="flex items-center justify-between py-2 cursor-pointer"
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
               >
                 <span>Switch Theme</span>
                 {theme === "dark" ? (
@@ -138,7 +156,7 @@ export default function Header() {
                 ) : (
                   <Moon className="text-gray-800 w-5 h-5" />
                 )}
-              </div>
+              </motion.div>
 
               <SignedOut>
                 <div className="flex flex-col gap-2">
@@ -157,16 +175,14 @@ export default function Header() {
 
               <SignedIn>
                 <div className="flex flex-col gap-2">
-                  {/* <Link href="/create-listing"> */}
-                    <RestPage/>
-                  {/* </Link> */}
+                  <ListingPro />
                   <div className="flex justify-center py-2">
                     <UserButton />
                   </div>
                 </div>
               </SignedIn>
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
     </header>
