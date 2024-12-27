@@ -7,6 +7,8 @@ import { SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import RestPage from "./RestPage";
+// import TestPage from "../drawer/test";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -78,7 +80,6 @@ export default function Header() {
               About
             </li>
           </Link>
-
           <li>
             <div
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -106,9 +107,7 @@ export default function Header() {
           </SignedOut>
 
           <SignedIn>
-            <Link href="/create/listing">
-              <Button>Dashboard</Button>
-            </Link>
+                <RestPage/>
             <UserButton />
           </SignedIn>
         </ul>
@@ -158,9 +157,9 @@ export default function Header() {
 
               <SignedIn>
                 <div className="flex flex-col gap-2">
-                  <Link href="/create-listing">
-                    <Button className="w-full">Dashboard</Button>
-                  </Link>
+                  {/* <Link href="/create-listing"> */}
+                    <RestPage/>
+                  {/* </Link> */}
                   <div className="flex justify-center py-2">
                     <UserButton />
                   </div>
