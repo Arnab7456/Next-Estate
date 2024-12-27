@@ -1,6 +1,5 @@
 import { ListingProos } from "@/types/type";
 import HomeClient from "./components/HomePage";
-
 async function fetchListings(params: { type?: string; offer?: boolean; limit?: number; order?: string }): Promise<ListingProos[] | null> {
   try {
     const result = await fetch(`${process.env.URL}/api/listing/get`, {
